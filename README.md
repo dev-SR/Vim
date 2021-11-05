@@ -5,13 +5,19 @@
 		- [VsCode](#vscode)
 		- [IntelliJ IDEA](#intellij-idea)
 		- [KeyStroke](#keystroke)
+	- [Vim Fundamentals](#vim-fundamentals)
+		- [Syntax: `Verb + Noun`](#syntax-verb--noun)
+		- [Verbs in Vim](#verbs-in-vim)
+		- [Nouns in Vim -- Motions](#nouns-in-vim----motions)
+		- [Nouns in Vim -- Text Objects](#nouns-in-vim----text-objects)
+		- [Nouns in Vim -- Parameterized Text Objects](#nouns-in-vim----parameterized-text-objects)
 
 # VIM
 
-- All Using Keyboard Only: 👇
+- All Using Keyboard Only (without mouse): 👇
 
 <div align="center">
-<img  width="700" src="./gifs/vim-intro.gif">
+<img  width="600" src="./gifs/vim-intro.gif">
 </div>
 
 `Vi` is an ancient text editor, old even before the first age of the world. It was designed to work on contraptions called terminals with the very uncommon yet inspired characteristic of functioning in a modal fashion. That is, it has a mode for inserting text, another for editing text, a different one for selecting text, and so on.
@@ -114,4 +120,81 @@ imap aa <Esc>
 
 <div align="center">
 <img  width="400" src="./gifs/Carnac.jpg">
+</div>
+
+## Vim Fundamentals
+
+- Go into `Insert` mode with `i` where you can type stuff as usual
+- Go back to `Normal` mode with `<ESC>` or `<CTRL-C>`
+- Go into `Visual` mode with `v` (Must be in Normal mode to going into Visual Mode)
+
+### Syntax: `Verb + Noun`
+
+- `d` for **delete**
+- `w` for **word**,
+
+so, `dw` combined to be **"delete word"**
+
+<div align="center">
+<img  width="600" src="./gifs/dw-1.gif">
+</div>
+
+### Verbs in Vim
+
+The operation you want to take on the text
+
+- `d`  : Delete
+- `c` : Change (delete and enter `insert` mode)
+- `>`  : Indent (`.`for repeating last command)
+
+<div align="center">
+<img  width="600" src="./gifs/indent-1.gif">
+</div>
+
+- `y`  : Yank (copy)
+- `p`  : Paste
+- `v`  : Visually select
+
+### Nouns in Vim -- Motions
+
+- `hjkl` : Move around with
+
+```bash
+         ↑
+     ← h j k l →
+         ↓
+```
+
+- `wW` : word (forward by a "word" | cursor at the beginning of the word )
+- `eE` : word (forward by a "word" | cursor at the end of the  word)
+- `bB` : back (back by a "word")
+- `2j` : down 2 lines
+
+other > `wWbBeE `
+
+### Nouns in Vim -- Text Objects
+
+- `iw` : "inner word" (works from anywhere in a word)
+- `it` : "inner tag" (the contents of an HTML tag)
+- `i"` : "inner quotes"
+- `ip` : "inner paragraph"
+- `as` : "a sentence"
+
+example:
+
+`di”`   -> **Delete inside Quotes**.
+
+<div align="center">
+<img  width="600" src="./gifs/di_.gif">
+</div>
+
+
+### Nouns in Vim -- Parameterized Text Objects
+
+- `f, F` : "<f>			</f>ind" the next character
+- `t, T` : "find" the next character
+- `/` : Search (up to the next match)
+
+<div align="center">
+<img  width="600" src="./gifs/fFtT.gif">
 </div>
