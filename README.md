@@ -1,16 +1,28 @@
 
 - [VIM](#vim)
-	- [Vim Configuration](#vim-configuration)
-		- [Linux](#linux)
-		- [VsCode](#vscode)
-		- [IntelliJ IDEA](#intellij-idea)
-		- [KeyStroke](#keystroke)
-	- [Vim Fundamentals](#vim-fundamentals)
-		- [Syntax: `Verb + Noun`](#syntax-verb--noun)
-		- [Verbs in Vim](#verbs-in-vim)
-		- [Nouns in Vim -- Motions](#nouns-in-vim----motions)
-		- [Nouns in Vim -- Text Objects](#nouns-in-vim----text-objects)
-		- [Nouns in Vim -- Parameterized Text Objects](#nouns-in-vim----parameterized-text-objects)
+  - [Vim Configuration](#vim-configuration)
+    - [Linux](#linux)
+    - [VsCode](#vscode)
+    - [IntelliJ IDEA](#intellij-idea)
+    - [KeyStroke](#keystroke)
+  - [Vim Fundamentals](#vim-fundamentals)
+    - [Syntax: `Verb + Noun`](#syntax-verb--noun)
+    - [Verbs in Vim](#verbs-in-vim)
+    - [Nouns in Vim -- Motions](#nouns-in-vim----motions)
+    - [Nouns in Vim -- Text Objects](#nouns-in-vim----text-objects)
+    - [Nouns in Vim -- Parameterized Text Objects](#nouns-in-vim----parameterized-text-objects)
+  - [Navigation With Vim Motions](#navigation-with-vim-motions)
+    - [Character By Character](#character-by-character)
+    - [Move Horizontally Word By Word](#move-horizontally-word-by-word)
+    - [Move to A Specific Character](#move-to-a-specific-character)
+    - [Move Horizontally Extremely](#move-horizontally-extremely)
+    - [To Move Vertically](#to-move-vertically)
+    - [Vertical Motions With Search Pattern](#vertical-motions-with-search-pattern)
+    - [Moving Faster With Counts](#moving-faster-with-counts)
+    - [Moving Semantically](#moving-semantically)
+    - [Document](#document)
+    - [Window](#window)
+  - [Editing With Vim Operators](#editing-with-vim-operators)
 
 # VIM
 
@@ -144,7 +156,7 @@ so, `dw` combined to be **"delete word"**
 The operation you want to take on the text
 
 - `d`  : Delete
-- `c` : Change (delete and enter `insert` mode)
+- `c` : Change (It **deletes** and sends you into **insert** mode so that you can type)
 - `>`  : Indent (`.`for repeating last command)
 
 <div align="center">
@@ -157,14 +169,6 @@ The operation you want to take on the text
 
 ### Nouns in Vim -- Motions
 
-- `hjkl` : Move around with
-
-```bash
-         ↑
-     ← h j k l →
-         ↓
-```
-
 - `wW` : word (forward by a "word" | cursor at the beginning of the word )
 - `eE` : word (forward by a "word" | cursor at the end of the  word)
 - `bB` : back (back by a "word")
@@ -174,20 +178,37 @@ other > `wWbBeE `
 
 ### Nouns in Vim -- Text Objects
 
+The way that you specify a text object within a command is
+**by combining**
+
+- the letter `a` (which represents the text object plus whitespace) or
+- `i` (inner object without whitespace)
+
+**with a character that represents a text object itself:**
+
+- `w` for word
+- `s` for sentence
+- `' "` for quotes
+- `p` for paragraph
+- `b` for block surrounded by `(`
+- `B` for block surrounded by `{`
+- `t` for tag
+
+So,
+
 - `iw` : "inner word" (works from anywhere in a word)
 - `it` : "inner tag" (the contents of an HTML tag)
 - `i"` : "inner quotes"
 - `ip` : "inner paragraph"
 - `as` : "a sentence"
 
-example:
+i.e. to delete different bits of text you could:
 
 `di”`   -> **Delete inside Quotes**.
 
 <div align="center">
 <img  width="600" src="./gifs/di_.gif">
 </div>
-
 
 ### Nouns in Vim -- Parameterized Text Objects
 
@@ -198,3 +219,129 @@ example:
 <div align="center">
 <img  width="600" src="./gifs/fFtT.gif">
 </div>
+
+## Navigation With Vim Motions
+
+<div align="center">
+<img  width="600" src="./gifs/nav.jpg">
+</div>
+
+### Character By Character
+
+- `hjkl` : Move around with
+
+```bash
+         ↑
+     ← h j k l →
+         ↓
+```
+
+### Move Horizontally Word By Word
+
+- `w` - Forward to the beginning of the next word
+- `W` - Forward to the beginning of the next word (avoid symbols`[.,></|]`)
+
+- `b` - Backward to the next beginning of a word
+- `B` - Backward to the next beginning of a word  (avoid symbols`[.,></|]`)
+
+- `e` - Forward to the next end of word
+- `E` - Forward to the next end of word  (avoid symbols`[.,></|]`)
+
+<div align="center">
+<img  width="600" src="./gifs/wbe.gif">
+</div>
+
+### Move to A Specific Character
+
+Find character motions allow you to move horizontally quickly and with high precision:
+
+- Use `f{char}` to move (find) to the **next occurrence** of a character char in a line (and F to move backwards).
+- Use `t{char}` to move the **cursor just before (until) the next occurrence** of a character char
+
+<div align="center">
+<img  width="600" src="./gifs/fFtT.gif">
+</div>
+
+> After using `f{char}` you can type `;` to go to the next occurrence or `,` to go to the previous one. You can see the ; and , as commands for repeating the last character search.
+
+
+### Move Horizontally Extremely
+
+- `0` : Start of line
+- `^` : Start of line (after whitespace)
+- `$` : End of line
+
+<div align="center">
+<img  width="600" src="./gifs/line.gif">
+</div>
+
+### To Move Vertically
+Starting from k and j, we move on to a faster way of maneuvering vertically with:
+
+- `}` : jumps entire paragraphs downwards
+- `{` : similarly but upwards
+- `CTRL-D` : let’s you move down half a page
+- `CTRL-U` : let’s you move up half a page
+
+<div align="center">
+<img  width="600" src="./gifs/vertical_1.gif">
+</div>
+
+<div align="center">
+<img  width="600" src="./gifs/vertical_2.gif">
+</div>
+
+### Vertical Motions With Search Pattern
+
+To move vertically even faster when you have a target in mind, your best option is to search with the `/{pattern}` and `?{pattern}` commands:
+
+- Use `/{pattern}` to search forward inside a file
+- Use `?{pattern}` to search backwards
+- You’ll see that as you type, the matched patterns are **highlighted**. When you find what you want, type `<Enter>` and your cursor will jump to the first match in the search.
+- There you can perform some editing if you want and later use `n` to jump to the next match (or `N` for the previous one). You can think of n as repeating a search.
+
+- Vim loves saving you time: At any time, you can type `/<Enter>` or `?<Enter>` to run the last search (forwards or backwards).
+- Use `*` to do a search for the word under the cursor.
+
+<div align="center">
+<img  width="600" src="./gifs/search_1.gif">
+</div>
+
+### Moving Faster With Counts
+
+Counts are numbers which can be prefixed to a command to multiply the effect of that command. For instance, `2w` allows us to move the cursor **2 words forward**. Use `{count}motion` to multiply a motion `{count}` times.
+
+A great way to move vertically is to take advantage of counts in combination with `j` and `k`. This works very well when you enable relative line numbers (via VSCode preferences) because it becomes very natural to jump {count} lines up and down to reach a target line.
+
+### Moving Semantically
+
+- Use `gd` to jump to **definition** of whatever is under your cursor
+- Use `gf` to jump to **a file in an import**
+
+<div align="center">
+<img  width="600" src="./gifs/definition.gif">
+</div>
+
+### Document
+
+- `gg` : First line
+- `G` : Last line
+- `:{n}` : Go to line n
+- `{n}G` : Go to line n
+- `{n}gg` : Go to line n
+- `%` jump to matching ({[]})
+
+<div align="center">
+<img  width="600" src="./gifs/matching.gif">
+</div>
+
+### Window
+
+- `zz`: Center this line
+- `zt`: Top this line
+- `zb`: Bottom this line
+- `H`: Move to top of screen
+- `M`: Move to middle of screen
+- `L`: Move to bottom of screen
+
+## Editing With Vim Operators
