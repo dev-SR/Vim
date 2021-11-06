@@ -23,6 +23,11 @@
     - [Document](#document)
     - [Window](#window)
   - [Editing With Vim Operators](#editing-with-vim-operators)
+    - [`dnj` deletes n lines down](#dnj-deletes-n-lines-down)
+    - [`df{character}` and `df{character}` deletes everything until the first occurrence of the character](#dfcharacter-and-dfcharacter-deletes-everything-until-the-first-occurrence-of-the-character)
+    - [`d/{pattern}` deletes everything until the first occurrence of `pattern`](#dpattern-deletes-everything-until-the-first-occurrence-of-pattern)
+    - [Editing Up a Notch With Text Objects](#editing-up-a-notch-with-text-objects)
+    - [`daw` to delete a word (plus trailing whitespace)](#daw-to-delete-a-word-plus-trailing-whitespace)
 
 # VIM
 
@@ -231,7 +236,7 @@ i.e. to delete different bits of text you could:
 - `hjkl` : Move around with
 
 ```bash
-         ↑
+           ↑
      ← h j k l →
          ↓
 ```
@@ -345,3 +350,92 @@ A great way to move vertically is to take advantage of counts in combination wit
 - `L`: Move to bottom of screen
 
 ## Editing With Vim Operators
+
+Motions aren’t just for moving. They can be used in combination with a series of commands called operators to edit your code in Normal mode. These combos normally take this shape:
+
+```bash
+
+  an action to perform: "delete, change, yank, etc"
+         /
+        /
+       /                  ____ a motion that represents "a piece
+      |                  /     of text" to which to apply the action
+      |                 /      defined by the operator
+  {operator}{count}{motion}
+               \
+                \
+                 \
+                  \_ a multiplier to "perform an action
+                     {count} times"
+```
+
+### `dnj` deletes n lines down
+
+<div align="center">
+<img  width="600" src="./gifs/dnj.gif">
+</div>
+
+### `df{character}` and `df{character}` deletes everything until the first occurrence of the character
+
+- `df{character}` deletes everything in the current line **until the first occurrence of the character (including the character)**
+- `dt{character}` would do like above but **excluding the character (so up until just before)**
+  - for example:
+    - `df'` deletes everything in the current line until the first occurrence of the `'` character (including the character and `dt'` would do like above but excluding the character (so up until just before)
+
+<div align="center">
+<img  width="600" src="./gifs/dft.gif">
+</div>
+
+### `d/{pattern}` deletes everything until the first occurrence of `pattern`
+
+- `d/{pattern}` deletes everything until the first occurrence of `pattern`
+  - for example:
+    - `d/(` deletes everything until the first occurrence of `(`
+    - `d/hello` deletes everything until the first occurrence of `hello`
+
+<div align="center">
+<img  width="600" src="./gifs/d_search.gif">
+</div>
+
+### Editing Up a Notch With Text Objects
+
+The way that you specify a text object within a command is by combining the letter
+
+- `a` (which represents the text object plus whitespace) or
+- `i` (inner object without whitespace)
+
+with a character that represents a text object itself:
+
+- `w` for word,
+- `s` for sentence,
+- `' "` for quotes,
+- `p` for paragraph,
+- `b` for block surrounded by (
+- `B` for block surrounded by {
+- `t` for tag.
+
+So to delete different bits of text you could:
+
+### `daw` to delete a word (plus trailing whitespace)
+
+
+
+`ciw` to change inner word
+das to delete a sentence (dis delete inner sentence)
+da" to delete something in double quotes including the quotes
+ci" to change something inside double quotes
+dap to delete a paragraph
+dab da( or da) to delete a block surrounded by (
+daB da{ or da} to delete a block surrounded by {
+dat to delete an HTML tag
+cit to change the contents of an HTML tag
+
+
+
+- `ggdG` deletes a complete document
+- Double an operator to make it operate on a whole line:
+  - `dd` deletes a whole like
+  - `cc` changes a whole line etc.
+- Capitalize an operator to make it operate from the cursor to the end of a line:
+  - `D` deletes from the cursor to the end of the line,
+  - `C` changes to the end of a line, etc.
