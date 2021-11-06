@@ -27,7 +27,17 @@
     - [`df{character}` and `df{character}` deletes everything until the first occurrence of the character](#dfcharacter-and-dfcharacter-deletes-everything-until-the-first-occurrence-of-the-character)
     - [`d/{pattern}` deletes everything until the first occurrence of `pattern`](#dpattern-deletes-everything-until-the-first-occurrence-of-pattern)
     - [Editing Up a Notch With Text Objects](#editing-up-a-notch-with-text-objects)
-    - [`daw` to delete a word (plus trailing whitespace)](#daw-to-delete-a-word-plus-trailing-whitespace)
+      - [`daw` or `dw` to delete a word (plus trailing whitespace)](#daw-or-dw-to-delete-a-word-plus-trailing-whitespace)
+      - [`ciw` and `cw` to change inner word](#ciw-and-cw-to-change-inner-word)
+      - [`di"` to delete something in double quotes (`da"`including the quotes)](#di-to-delete-something-in-double-quotes-daincluding-the-quotes)
+      - [`das` to delete a sentence (`dis` delete inner sentence)](#das-to-delete-a-sentence-dis-delete-inner-sentence)
+      - [`dab`, `da(` or `da)` to delete a block surrounded by `(`](#dab-da-or-da-to-delete-a-block-surrounded-by-)
+      - [`daB` `da{` or `da}` to delete a block surrounded by `{`](#dab-da-or-da-to-delete-a-block-surrounded-by--1)
+      - [`dat` to delete an HTML tag (`cat` go to insert mode)](#dat-to-delete-an-html-tag-cat-go-to-insert-mode)
+      - [`dit` to change the contents of an HTML tag (`cit` go to insert mode)](#dit-to-change-the-contents-of-an-html-tag-cit-go-to-insert-mode)
+      - [`dap` to delete a paragraph](#dap-to-delete-a-paragraph)
+    - [Surrounding Things With Vim Surround](#surrounding-things-with-vim-surround)
+    - [Miscellaneous](#miscellaneous)
 
 # VIM
 
@@ -43,8 +53,10 @@ Vi’s latest and most celebrated incarnation is `Vim` (Vi `IMproved` and former
 
 - **Resources:**
   - [Boost Your Coding Fu With Visual Studio Code and Vim](https://www.barbarianmeetscoding.com/blog/boost-your-coding-fu-with-vscode-and-vim)
+  - [MOVING EVEN FASTER WITH VIM SURROUND AND EASYMOTION](https://www.barbarianmeetscoding.com/boost-your-coding-fu-with-vscode-and-vim/moving-even-faster-with-vim-sneak-and-easymotion/)
   - [Vim Cheat Sheet](https://vim.rtorr.com/)
   - [VIM & Visual Studio Code Tips & Tricks](https://dev.to/muhajirdev/vim-visual-studio-code-tips-tricks-with-video-gif-8on?signin=true)
+  - [Vim Hop/EasyMotion: The Power of Single-Char, Multi-Line Motion](https://medium.com/codex/vim-for-the-win-the-power-of-single-char-motion-82d93b4bf6d6)
 
 ## Vim Configuration
 
@@ -414,23 +426,108 @@ with a character that represents a text object itself:
 - `B` for block surrounded by {
 - `t` for tag.
 
+ex:
+
+<div align="center">
+<img  width="600" src="./gifs/ex_1.gif">
+</div>
+
 So to delete different bits of text you could:
 
-### `daw` to delete a word (plus trailing whitespace)
+#### `daw` or `dw` to delete a word (plus trailing whitespace)
 
+<div align="center">
+<img  width="600" src="./gifs/daw.gif">
+</div>
 
+#### `ciw` and `cw` to change inner word
 
-`ciw` to change inner word
-das to delete a sentence (dis delete inner sentence)
-da" to delete something in double quotes including the quotes
-ci" to change something inside double quotes
-dap to delete a paragraph
-dab da( or da) to delete a block surrounded by (
-daB da{ or da} to delete a block surrounded by {
-dat to delete an HTML tag
-cit to change the contents of an HTML tag
+<div align="center">
+<img  width="600" src="./gifs/ciw.gif">
+</div>
 
+#### `di"` to delete something in double quotes (`da"`including the quotes)
 
+<div align="center">
+<img  width="600" src="./gifs/dia.gif">
+</div>
+
+#### `das` to delete a sentence (`dis` delete inner sentence)
+
+<div align="center">
+<img  width="600" src="./gifs/das.gif">
+</div>
+
+#### `dab`, `da(` or `da)` to delete a block surrounded by `(`
+
+<div align="center">
+<img  width="600" src="./gifs/dab.gif">
+</div>
+
+#### `daB` `da{` or `da}` to delete a block surrounded by `{`
+
+<div align="center">
+<img  width="600" src="./gifs/daBB.gif">
+</div>
+
+#### `dat` to delete an HTML tag (`cat` go to insert mode)
+
+<div align="center">
+<img  width="600" src="./gifs/dat.gif">
+</div>
+
+#### `dit` to change the contents of an HTML tag (`cit` go to insert mode)
+
+<div align="center">
+<img  width="600" src="./gifs/dit.gif">
+</div>
+
+#### `dap` to delete a paragraph
+
+<div align="center">
+<img  width="600" src="./gifs/dap.gif">
+</div>
+
+### Surrounding Things With Vim Surround
+
+`VsCodeVim` comes with a bunch of useful Vim plugins built-in. One of them is `vim-surround` which extends Vim’s secret language with a new operator: The `surround` operator or `s`.
+
+Using this operator we can surround swaths of text using it as you would any other operator within Vim:
+
+- `ds{char}` to delete the surrounding `char`
+  - for example: `dst` to delete the surrounding html `t`ag.
+
+<div align="center">
+<img  width="600" src="./gifs/dst.gif">
+</div>
+
+- `(cs{old}{new})` to change the surrounding `old` for `new`
+  - For example: Change double quote to single quote with `cs"'`
+
+<div align="center">
+<img  width="600" src="./gifs/cs.gif">
+</div>
+
+- `(ys{motion}{char})` :
+  - for example: `ysap|t|div` to surround a paragraph with an <div> tag
+
+<div align="center">
+<img  width="600" src="./gifs/ysap.gif">
+</div>
+
+- You can also use vim-surround by selecting a bit of text in `visual mode` and then using `S{desired character}`
+> ex 1:
+<div align="center">
+<img  width="600" src="./gifs/vS.gif">
+</div>
+
+> ex 2:
+
+<div align="center">
+<img  width="600" src="./gifs/vst.gif">
+</div>
+
+### Miscellaneous
 
 - `ggdG` deletes a complete document
 - Double an operator to make it operate on a whole line:
